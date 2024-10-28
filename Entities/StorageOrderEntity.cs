@@ -16,11 +16,6 @@ namespace ProductOrder.Entities
         /// ID cửa hàng
         /// </summary>
         public Guid StoreID { get; set; }
-        
-        /// <summary>
-        /// Danh sách sản phẩm được yêu cầu
-        /// </summary>
-        public List<ProductEntity> Products { get; set; }
 
         /// <summary>
         /// Trạng thái
