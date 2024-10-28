@@ -38,9 +38,9 @@ namespace ProductOrder.Entities
         public string Address { get; set; }
 
         /// <summary>
-        /// Danh sách sản phẩm
+        /// Tổng giá
         /// </summary>
-        public List<ProductEntity> Products { get; set; }
+        public decimal? TotalPrice { get; set; }
 
         /// <summary>
         /// Phương thức thanh toán
