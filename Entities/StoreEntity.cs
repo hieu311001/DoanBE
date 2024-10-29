@@ -20,5 +20,10 @@ namespace ProductOrder.Entities
         /// Địa chỉ
         /// </summary>
         public string Address { get; set; }
+
+        /// <summary>
+        /// SĐT
+        /// </summary>
+        public string PhoneNumber { get; set; }
     }
 }

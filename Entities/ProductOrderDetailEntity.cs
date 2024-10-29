@@ -5,7 +5,7 @@ namespace ProductOrder.Entities
     /// <summary>
     /// Bảng chi tiết đơn hàng
     /// </summary>
-    [Table(Name = "productorderdetails")]
+    [Table(Name = "productorderdetails", View = "view_productorderdetails")]
     public class ProductOrderDetailEntity
     {
         [Key]
