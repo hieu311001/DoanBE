@@ -6,5 +6,10 @@
         /// Tên bảng
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Tên view
+        /// </summary>
+        public string View {  get; set; }
     }
 }

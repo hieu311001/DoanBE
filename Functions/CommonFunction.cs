@@ -171,7 +171,7 @@ namespace ProductOrder.Functions
 
             Type type = typeof(T);
 
-            string tableName = GetTableName<T>();
+            string tableName = GetTableView<T>() ?? GetTableName<T>();
 
             query += "SELECT ";
 
@@ -440,6 +440,16 @@ namespace ProductOrder.Functions
             query += ")";
 
             return query;
+        }
+
+        /// <summary>
+        /// Lấy tên view
+        /// </summary>
+        public static string GetTableView<T>()
+        {
+            var tableAttribute = typeof(T).GetCustomAttributes(typeof(TableAttribute), true).FirstOrDefault() as TableAttribute;
+
+            return tableAttribute?.View;
         }
     }
 }
