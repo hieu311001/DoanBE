@@ -199,9 +199,6 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Xóa nhiều dữ liệu
         /// </summary>
-        /// <param name="ids"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public virtual int Delete(List<string> ids)
         {
             string query = CommonFunction.BuildDeleteQuery<T>(ids);
@@ -216,6 +213,23 @@ namespace ProductOrder.Repos.Repos
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Xử lý gọi proc
+        /// </summary>
+        public virtual int ExecuteProc(string procName, Dictionary<string, object> parameters)
+        {
+            var param = new DynamicParameters(parameters);
+
+            int row = sqlConnection.Execute(procName, param, commandType: System.Data.CommandType.StoredProcedure);
+
+            if (sqlConnection != null && sqlConnection.State != System.Data.ConnectionState.Closed)
+            {
+                sqlConnection.Close();
+            }
+
+            return row;
         }
     }
 }
