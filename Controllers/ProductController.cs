@@ -9,7 +9,7 @@ namespace ProductOrder.Controllers
     [ApiController]
     public class ProductController : BaseController<ProductEntity, IProductService>
     {
-        public ProductController(IProductService service) : base(service)
+        public ProductController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
     }

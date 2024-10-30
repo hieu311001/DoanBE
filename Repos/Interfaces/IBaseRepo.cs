@@ -10,6 +10,11 @@ namespace ProductOrder.Repos.Interfaces
         List<T> GetPaging(PagingParameter parameter);
 
         /// <summary>
+        /// Lấy filter
+        /// </summary>
+        List<T> GetFilter(List<FilterParameter> filters, List<string> columns);
+
+        /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
         T GetRecord(Guid id);

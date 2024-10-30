@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductOrder.Parameters;
 using ProductOrder.Services.Interfaces;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,9 +15,9 @@ namespace ProductOrder.Controllers
     {
         TService _service;
 
-        public BaseController(TService service)
+        public BaseController(IServiceProvider serviceProvider)
         {
-            _service = service;
+            _service = serviceProvider.GetRequiredService<TService>();
         }
 
         /// <summary>
@@ -26,6 +27,16 @@ namespace ProductOrder.Controllers
         public IActionResult GetPaging([FromBody] PagingParameter parameter)
         {
             List<T> result = _service.GetPaging(parameter);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy phân trang
+        /// </summary>
+        [HttpPost("filters")]
+        public IActionResult GetFilter([FromBody] PagingParameter parameter)
+        {
+            List<T> result = _service.GetFilter(parameter.Filters, parameter.Columns);
             return Ok(result);
         }
 
