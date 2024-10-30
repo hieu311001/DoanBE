@@ -1,8 +1,8 @@
-﻿using ProductOrder.Parameters;
+﻿using ProductOrder.Attributes;
 using ProductOrder.Enums;
-using ProductOrder.Attributes;
-using System.Text.Json;
+using ProductOrder.Parameters;
 using System.Reflection;
+using System.Text.Json;
 
 namespace ProductOrder.Functions
 {
@@ -47,31 +47,45 @@ namespace ProductOrder.Functions
                 alias += ".";
             }
 
-            JsonElement? jsonElement = (JsonElement?)filter.Value;
+            object value = null;
+            Type valueType = filter.Value?.GetType();
 
-            object value = GetSqlValue(jsonElement);
+            if (valueType == typeof(JsonElement)) 
+            {
+                JsonElement? jsonElement = (JsonElement?)filter.Value;
+                value = GetSqlValue(jsonElement);
+            }
+            else if (valueType != null)
+            {
+                value = GetSqlValue(filter.Value, valueType);
+            }
+
+            if (value == null)
+            {
+                return query;
+            }
 
             query += $"({alias}{filter.Column} ";
 
             switch (filter.Operator)
             {
                 case FilterOperatorEnum.Equal:
-                    query += $"= {filter.Value}";
+                    query += $"= {value}";
                     break;
                 case FilterOperatorEnum.NotEqual:
-                    query += $"<> {filter.Value}";
+                    query += $"<> {value}";
                     break;
                 case FilterOperatorEnum.GreaterThan:
-                    query += $"> {filter.Value}";
+                    query += $"> {value}";
                     break;
                 case FilterOperatorEnum.GreaterThanOrEqual:
-                    query += $">= {filter.Value}";
+                    query += $">= {value}";
                     break;
                 case FilterOperatorEnum.LessThan:
-                    query += $"< {filter.Value}";
+                    query += $"< {value}";
                     break;
                 case FilterOperatorEnum.LessThanOrEqual:
-                    query += $"<= {filter.Value}";
+                    query += $"<= {value}";
                     break;
                 case FilterOperatorEnum.IsNull:
                     query += $"IS NULL";
@@ -158,9 +172,9 @@ namespace ProductOrder.Functions
         }
 
         /// <summary>
-        /// Tạo câu query select
+        /// Tạo câu query select phân trang
         /// </summary>
-        public static string BuildSelectQuery<T>(PagingParameter parameter, string alias = "") where T : class
+        public static string BuildSelectPagingQuery<T>(PagingParameter parameter, string alias = "") where T : class
         {
             string query = string.Empty;
 
@@ -203,6 +217,55 @@ namespace ProductOrder.Functions
 
             query += BuildFilterQuery(parameter.Filters, alias);
             query += BuildPagingQuery(parameter.Skip, parameter.Take);
+
+            return query;
+        }
+
+        /// <summary>
+        /// Tạo câu query select filter
+        /// </summary>
+        public static string BuildSelectFilterQuery<T>(List<FilterParameter> filters, List<string> columns, string alias = "") where T : class
+        {
+            string query = string.Empty;
+
+            if (filters == null || filters.Count == 0 || columns == null || columns.Count == 0)
+            {
+                return query;
+            }
+
+            Type type = typeof(T);
+
+            string tableName = GetTableView<T>() ?? GetTableName<T>();
+
+            query += "SELECT ";
+
+            string columnAlias = string.Empty;
+
+            if (!string.IsNullOrEmpty(alias))
+            {
+                columnAlias = $"{alias}.";
+            }
+
+            foreach (string column in columns)
+            {
+                if (column == columns.First())
+                {
+                    query += $"{columnAlias}{column}";
+                }
+                else
+                {
+                    query += $", {columnAlias}{column}";
+                }
+            }
+
+            query += $" FROM {tableName}";
+
+            if (!string.IsNullOrEmpty(alias))
+            {
+                query += $"AS {alias}";
+            }
+
+            query += BuildFilterQuery(filters, alias);
 
             return query;
         }
@@ -333,6 +396,11 @@ namespace ProductOrder.Functions
             if (propertyType == typeof(string) || propertyType == typeof(Guid))
             {
                 return $"N'{value}'";
+            }
+
+            if (propertyType.IsEnum)
+            {
+                return (int)value;
             }
 
             return value;

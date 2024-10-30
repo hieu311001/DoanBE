@@ -25,6 +25,14 @@ namespace ProductOrder.Services.Services
         }
 
         /// <summary>
+        /// Lấy filter
+        /// </summary>
+        public virtual List<T> GetFilter(List<FilterParameter> filters, List<string> columns)
+        {
+            return _repo.GetFilter(filters, columns);
+        }
+
+        /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
         public virtual T GetRecord(Guid id)

@@ -24,9 +24,28 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Lấy dữ liệu phân trang
         /// </summary>
-        public List<T> GetPaging(PagingParameter parameter)
+        public virtual List<T> GetPaging(PagingParameter parameter)
         {
-            string query = CommonFunction.BuildSelectQuery<T>(parameter);
+            string query = CommonFunction.BuildSelectPagingQuery<T>(parameter);
+
+            var cmd = new MySqlCommand(query, sqlConnection);
+
+            List<T> result = sqlConnection.Query<T>(query).ToList();
+
+            if (sqlConnection != null && sqlConnection.State != System.Data.ConnectionState.Closed)
+            {
+                sqlConnection.Close();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Lấy filter
+        /// </summary>
+        public virtual List<T> GetFilter(List<FilterParameter> filters, List<string> columns)
+        {
+            string query = CommonFunction.BuildSelectFilterQuery<T>(filters, columns);
 
             var cmd = new MySqlCommand(query, sqlConnection);
 
@@ -43,7 +62,7 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
-        public T GetRecord(Guid id)
+        public virtual T GetRecord(Guid id)
         {
             string query = CommonFunction.BuildSelectRecordQuery<T>(id);
 
@@ -62,7 +81,7 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Thêm mới dữ liệu
         /// </summary>
-        public int Insert(T item)
+        public virtual int Insert(T item)
         {
             string query = CommonFunction.BuildInsertQuery<T>(item);
 
@@ -81,7 +100,7 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Thêm mới nhiều dữ liệu
         /// </summary>
-        public int MultiInsert(List<T> items)
+        public virtual int MultiInsert(List<T> items)
         {
             int row = 0;
 
@@ -121,7 +140,7 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Cập nhật dữ liệu
         /// </summary>
-        public int Update(T item)
+        public virtual int Update(T item)
         {
             string query = CommonFunction.BuildUpdateQuery<T>(item);
 
@@ -140,7 +159,7 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Cập nhật nhiều dữ liệu
         /// </summary>
-        public int MultiUpdate(List<T> items)
+        public virtual int MultiUpdate(List<T> items)
         {
             int row = 0;
 
@@ -183,7 +202,7 @@ namespace ProductOrder.Repos.Repos
         /// <param name="ids"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public int Delete(List<string> ids)
+        public virtual int Delete(List<string> ids)
         {
             string query = CommonFunction.BuildDeleteQuery<T>(ids);
 

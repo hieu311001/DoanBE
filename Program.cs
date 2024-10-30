@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using ProductOrder.Repos.Interfaces;
 using ProductOrder.Repos.Repos;
 using ProductOrder.Services.Interfaces;
 using ProductOrder.Services.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,7 @@ builder.Services.AddScoped<IStorageOrderService, StorageOrderService>();
 builder.Services.AddScoped<IStorageOrderDetailService, StorageOrderDetailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStoreService, StoreService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 // Khai báo Interface repo
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
@@ -36,6 +40,13 @@ builder.Services.AddScoped<IStoreRepo, StoreRepo>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(x => x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("PrivateKey"))),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using ProductOrder.Attributes;
+﻿using ProductOrder.Attributes;
 using ProductOrder.Enums;
 
-namespace ProductOrder.Entities
+namespace ProductOrder.Model
 {
-    /// <summary>
-    /// Người dùng
-    /// </summary>
-    [Table(Name = "users")]
-    public class UserEntity
+    public class ModelUserLogin
     {
         [Key]
         public Guid UserID { get; set; }
@@ -39,8 +34,8 @@ namespace ProductOrder.Entities
         public Guid? StoreID { get; set; }
 
         /// <summary>
-        /// Mật khẩu
+        /// Access token
         /// </summary>
-        public string Password { get; set; }
+        public string AccessToken { get; set; }
     }
 }

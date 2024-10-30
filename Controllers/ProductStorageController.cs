@@ -8,7 +8,7 @@ namespace ProductOrder.Controllers
     [ApiController]
     public class ProductStorageController : BaseController<ProductStorageEntity, IProductStorageService>
     {
-        public ProductStorageController(IProductStorageService service) : base(service)
+        public ProductStorageController(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
     }
