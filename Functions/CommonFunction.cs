@@ -1,6 +1,7 @@
 ﻿using ProductOrder.Attributes;
 using ProductOrder.Enums;
 using ProductOrder.Parameters;
+using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
 
@@ -128,7 +129,7 @@ namespace ProductOrder.Functions
         /// </summary>
         public static string BuildSelectRecordQuery<T>(Guid id) where T : class
         {
-            string tableName = GetTableName<T>();
+            string tableName = GetTableView<T>() ?? GetTableName<T>();
 
             PropertyInfo keyProperty = GetKeyProperty<T>();
 
@@ -395,6 +396,15 @@ namespace ProductOrder.Functions
 
             if (propertyType == typeof(string) || propertyType == typeof(Guid))
             {
+                return $"N'{value}'";
+            }
+
+            if (propertyType == typeof(DateTime))
+            {
+                DateTime date = DateTime.ParseExact(value.ToString(), "M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
+
+                value = date.ToString("yyyy-MM-dd HH:mm:ss");
+
                 return $"N'{value}'";
             }
 

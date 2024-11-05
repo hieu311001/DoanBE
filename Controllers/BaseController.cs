@@ -13,7 +13,7 @@ namespace ProductOrder.Controllers
         where T : class
         where TService : IBaseService<T>
     {
-        TService _service;
+        protected TService _service;
 
         public BaseController(IServiceProvider serviceProvider)
         {
@@ -45,8 +45,8 @@ namespace ProductOrder.Controllers
         /// </summary>
         [HttpGet("id")]
         public IActionResult GetRecord(Guid id)
-        {
-            T result = _service.GetRecord(id);
+        {   
+            dynamic result = _service.GetRecord(id);
 
             return Ok(result);
         }

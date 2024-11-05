@@ -17,7 +17,7 @@ namespace ProductOrder.Repos.Interfaces
         /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
-        T GetRecord(Guid id);
+        dynamic GetRecord(Guid id);
 
         /// <summary>
         /// Thêm mới dữ liệu
@@ -43,5 +43,7 @@ namespace ProductOrder.Repos.Interfaces
         /// Xóa nhiều dữ liệu
         /// </summary>
         int Delete(List<string> ids);
+
+        dynamic ExecuteProc(string procName, Dictionary<string, object> parameters);
     }
 }

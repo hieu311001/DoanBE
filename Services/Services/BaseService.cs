@@ -9,7 +9,7 @@ namespace ProductOrder.Services.Services
         where T : class
         where TRepo : IBaseRepo<T>
     {
-        private TRepo _repo;
+        protected TRepo _repo;
 
         public BaseService(TRepo repo)
         {
@@ -35,7 +35,7 @@ namespace ProductOrder.Services.Services
         /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
-        public virtual T GetRecord(Guid id)
+        public virtual dynamic GetRecord(Guid id)
         {
             return _repo.GetRecord(id);
         }

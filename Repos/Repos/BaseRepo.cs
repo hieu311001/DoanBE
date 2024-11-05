@@ -62,13 +62,13 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
-        public virtual T GetRecord(Guid id)
+        public virtual dynamic GetRecord(Guid id)
         {
             string query = CommonFunction.BuildSelectRecordQuery<T>(id);
 
             var cmd = new MySqlCommand(query, sqlConnection);
 
-            T result = sqlConnection.QueryFirstOrDefault<T>(query);
+            dynamic result = sqlConnection.QueryFirstOrDefault<T>(query);
 
             if (sqlConnection != null && sqlConnection.State != System.Data.ConnectionState.Closed)
             {
@@ -93,6 +93,18 @@ namespace ProductOrder.Repos.Repos
             {
                 sqlConnection.Close();
             }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Thêm mới dữ liệu với transaction truyền vào
+        /// </summary>
+        public virtual int Insert(T item, MySqlTransaction transaction)
+        {
+            string query = CommonFunction.BuildInsertQuery<T>(item);
+
+            int result = sqlConnection.Execute(query, transaction: transaction);
 
             return result;
         }
@@ -218,18 +230,18 @@ namespace ProductOrder.Repos.Repos
         /// <summary>
         /// Xử lý gọi proc
         /// </summary>
-        public virtual int ExecuteProc(string procName, Dictionary<string, object> parameters)
+        public virtual dynamic ExecuteProc(string procName, Dictionary<string, object> parameters)
         {
             var param = new DynamicParameters(parameters);
 
-            int row = sqlConnection.Execute(procName, param, commandType: System.Data.CommandType.StoredProcedure);
+            dynamic result = sqlConnection.Query(procName, param, commandType: System.Data.CommandType.StoredProcedure);
 
             if (sqlConnection != null && sqlConnection.State != System.Data.ConnectionState.Closed)
             {
                 sqlConnection.Close();
             }
 
-            return row;
+            return result;
         }
     }
 }

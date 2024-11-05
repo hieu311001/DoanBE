@@ -18,7 +18,7 @@ namespace ProductOrder.Services.Interfaces
         /// <summary>
         /// Lấy 1 bản ghi
         /// </summary>
-        T GetRecord(Guid id);
+        dynamic GetRecord(Guid id);
 
         /// <summary>
         /// Thêm mới dữ liệu

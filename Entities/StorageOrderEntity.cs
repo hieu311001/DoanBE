@@ -21,5 +21,7 @@ namespace ProductOrder.Entities
         /// Trạng thái
         /// </summary>
         public StorageOrderStatus Status { get; set; }
+
+        public DateTime CreateDate { get; set; }
     }
 }
