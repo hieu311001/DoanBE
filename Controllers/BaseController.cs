@@ -23,6 +23,16 @@ namespace ProductOrder.Controllers
         /// <summary>
         /// Lấy phân trang
         /// </summary>
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            dynamic result = _service.GetAll();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy phân trang
+        /// </summary>
         [HttpPost("paging")]
         public IActionResult GetPaging([FromBody] PagingParameter parameter)
         {

@@ -15,5 +15,25 @@ namespace ProductOrder.Services.Services
         {
             return _repo.CreateOrder(param);
         }
+
+        public dynamic GetAllProductOrder(Guid? storeID)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+
+            param.Add("storeID", storeID);
+
+            dynamic result = _repo.ExecuteProc("Proc_GetAllProductOrder", param);
+            return result;
+        }
+
+        public dynamic GetProductByProductOrder(Guid? productOrderID)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+
+            param.Add("productOrderID", productOrderID);
+
+            dynamic result = _repo.ExecuteProc("Proc_GetProductByProductOrder", param);
+            return result;
+        }
     }
 }

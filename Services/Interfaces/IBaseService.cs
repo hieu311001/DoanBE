@@ -44,5 +44,6 @@ namespace ProductOrder.Services.Interfaces
         /// Xóa nhiều bản ghi
         /// </summary>
         int Delete(List<string> ids);
+        dynamic GetAll();
     }
 }

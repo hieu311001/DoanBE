@@ -22,5 +22,25 @@ namespace ProductOrder.Controllers
             var result = _service.CreateOrder(param);
             return Ok(result);
         }
+
+        /// <summary>
+        /// Lấy toàn bộ sản phẩm
+        /// </summary>
+        [HttpGet("get-all/{storeID}")]
+        public IActionResult GetAllProductOrder(Guid? storeID)
+        {
+            dynamic result = _service.GetAllProductOrder(storeID);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy toàn bộ sản phẩm
+        /// </summary>
+        [HttpGet("get-detail/{productOrderID}")]
+        public IActionResult GetProductByProductOrder(Guid? productOrderID)
+        {
+            dynamic result = _service.GetProductByProductOrder(productOrderID);
+            return Ok(result);
+        }
     }
 }

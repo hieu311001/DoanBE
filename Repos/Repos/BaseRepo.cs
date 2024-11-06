@@ -243,5 +243,21 @@ namespace ProductOrder.Repos.Repos
 
             return result;
         }
+
+        public dynamic GetAll()
+        {
+            string query = CommonFunction.BuildSelectQuery<T>();
+
+            var cmd = new MySqlCommand(query, sqlConnection);
+
+            dynamic result = sqlConnection.Query<dynamic>(query).ToList();
+
+            if (sqlConnection != null && sqlConnection.State != System.Data.ConnectionState.Closed)
+            {
+                sqlConnection.Close();
+            }
+
+            return result;
+        }
     }
 }

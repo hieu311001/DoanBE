@@ -6,7 +6,7 @@ namespace ProductOrder.Entities
     /// <summary>
     /// Bảng yêu cầu lấy hàng từ kho
     /// </summary>
-    [Table(Name = "storageorders")]
+    [Table(Name = "storageorders", View = "view_storageorder")]
     public class StorageOrderEntity
     {
         [Key]
@@ -22,6 +22,10 @@ namespace ProductOrder.Entities
         /// </summary>
         public StorageOrderStatus Status { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+
+        public string Note { get; set; }
+
+        public string Reject {  get; set; }
     }
 }

@@ -45,5 +45,6 @@ namespace ProductOrder.Repos.Interfaces
         int Delete(List<string> ids);
 
         dynamic ExecuteProc(string procName, Dictionary<string, object> parameters);
+        dynamic GetAll();
     }
 }

@@ -175,6 +175,20 @@ namespace ProductOrder.Functions
         /// <summary>
         /// Tạo câu query select phân trang
         /// </summary>
+        public static string BuildSelectQuery<T>() where T : class
+        {
+            string tableName = GetTableView<T>() ?? GetTableName<T>();
+
+            PropertyInfo keyProperty = GetKeyProperty<T>();
+
+            string query = $"SELECT * FROM {tableName}";
+
+            return query;
+        }
+
+        /// <summary>
+        /// Tạo câu query select phân trang
+        /// </summary>
         public static string BuildSelectPagingQuery<T>(PagingParameter parameter, string alias = "") where T : class
         {
             string query = string.Empty;

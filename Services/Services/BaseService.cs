@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Crypto;
 using ProductOrder.Parameters;
 using ProductOrder.Repos.Interfaces;
 using ProductOrder.Services.Interfaces;
@@ -78,6 +79,11 @@ namespace ProductOrder.Services.Services
         public virtual int Delete(List<string> ids)
         {
             return _repo.Delete(ids);
+        }
+
+        public dynamic GetAll()
+        {
+            return _repo.GetAll();
         }
     }
 }

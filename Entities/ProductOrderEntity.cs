@@ -6,7 +6,7 @@ namespace ProductOrder.Entities
     /// <summary>
     /// Bảng đơn hàng
     /// </summary>
-    [Table(Name = "productorders")]
+    [Table(Name = "productorders", View = "view_productorders")]
     public class ProductOrderEntity
     {
         [Key]
@@ -55,7 +55,7 @@ namespace ProductOrder.Entities
         /// <summary>
         /// Ngày đặt hàng
         /// </summary>
-        public DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
 
         /// <summary>
         /// Trạng thái

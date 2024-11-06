@@ -5,7 +5,7 @@ namespace ProductOrder.Entities
     /// <summary>
     /// Bảng kho hàng
     /// </summary>
-    [Table(Name = "productstorages")]
+    [Table(Name = "productstorages", View = "view_productstorages")]
     public class ProductStorageEntity
     {
         [Key]
@@ -25,5 +25,7 @@ namespace ProductOrder.Entities
         /// Số lượng
         /// </summary>
         public decimal TotalAmount { get; set; }
+
+        public DateTime CreateDate { get; set; }
     }
 }
