@@ -7,6 +7,8 @@ namespace ProductOrder.Services.Interfaces
     {
         dynamic AcceptStorageOrder(string storageOrderID);
         bool CreateStoreOrder(CreateStoreOrderParam param);
+        bool CreateStoreOrderByStorage(CreateStoreOrderParam param);
+        dynamic GetAllStorageOrderByStorage(Guid storeID);
         dynamic GetProductByStorageOrder(Guid? storageOrderID);
     }
 }

@@ -20,5 +20,24 @@ namespace ProductOrder.Services.Services
             dynamic result = _repo.ExecuteProc("Proc_GetAllProduct", param);
             return result;
         }
+
+        /// <summary>
+        /// Thêm mới dữ liệu
+        /// </summary>
+        public override int Insert(ProductEntity item)
+        {
+            var res = _repo.Insert(item);
+
+            if (res != 0)
+            {
+                Dictionary<string, object> param = new Dictionary<string, object>();
+
+                param.Add("productID", item.ProductID);
+
+                dynamic result = _repo.ExecuteProc("Proc_AddProductStorage", param);
+            }
+
+            return res;
+        }
     }
 }

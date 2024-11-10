@@ -37,5 +37,10 @@ namespace ProductOrder.Model
         /// Access token
         /// </summary>
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// Access token
+        /// </summary>
+        public string Address { get; set; }
     }
 }

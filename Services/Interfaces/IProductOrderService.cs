@@ -8,5 +8,6 @@ namespace ProductOrder.Services.Interfaces
         bool CreateOrder(CreateOrderParam param);
         dynamic GetAllProductOrder(Guid? storeID);
         dynamic GetProductByProductOrder(Guid? productOrderID);
+        dynamic GetProductOrderByUserID(Guid? userID);
     }
 }

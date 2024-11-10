@@ -35,5 +35,34 @@ namespace ProductOrder.Services.Services
             dynamic result = _repo.ExecuteProc("Proc_GetProductByProductOrder", param);
             return result;
         }
+
+        public dynamic GetProductOrderByUserID(Guid? userID)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+
+            param.Add("userID", userID);
+
+            dynamic result = _repo.ExecuteProc("Proc_GetProductOrderByUserID", param);
+            return result;
+        }
+
+        /// <summary>
+        /// Cập nhật dữ liệu
+        /// </summary>
+        public override int Update(ProductOrderEntity item)
+        {
+            var res = _repo.Update(item);
+
+            if (item.Status == Enums.ProductOrderStatus.Done)
+            {
+                Dictionary<string, object> param = new Dictionary<string, object>();
+
+                param.Add("productOrderID", item.ProductOrderID);
+
+                _repo.ExecuteProc("Proc_ProductOrderDone", param);
+            }
+
+            return res;
+        }
     }
 }

@@ -26,6 +26,32 @@ namespace ProductOrder.Services.Services
             return _repo.CreateStoreOrder(param);
         }
 
+        public bool CreateStoreOrderByStorage(CreateStoreOrderParam param)
+        {
+            var res =  _repo.CreateStoreOrder(param);
+
+            if (res)
+            {
+                Dictionary<string, object> parameter = new Dictionary<string, object>();
+
+                parameter.Add("storageOrderID", param.storeOrder.StorageOrderID);
+
+                _repo.ExecuteProc("Proc_AcceptStorageOrderByStorage", parameter);
+            }
+
+            return res;
+        }
+
+        public dynamic GetAllStorageOrderByStorage(Guid storeID)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+
+            param.Add("storeID", storeID);
+
+            dynamic result = _repo.ExecuteProc("Proc_GetStorageOrderByStorage", param);
+            return result;
+        }
+
         public dynamic GetProductByStorageOrder(Guid? storageOrderID)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();

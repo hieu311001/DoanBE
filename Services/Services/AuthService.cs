@@ -52,7 +52,8 @@ namespace ProductOrder.Services.Services
                 PhoneNumber = userDB.PhoneNumber,
                 Role = userDB.Role,
                 StoreID = userDB.StoreID,
-                AccessToken = token
+                AccessToken = token,
+                Address = userDB.Address
             };
 
             return modelUserLogin;

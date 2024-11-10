@@ -36,6 +36,16 @@ namespace ProductOrder.Controllers
         /// <summary>
         /// Lấy toàn bộ sản phẩm
         /// </summary>
+        [HttpGet("get-by-user/{userID}")]
+        public IActionResult GetProductOrderByUserID(Guid? userID)
+        {
+            dynamic result = _service.GetProductOrderByUserID(userID);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Lấy toàn bộ sản phẩm
+        /// </summary>
         [HttpGet("get-detail/{productOrderID}")]
         public IActionResult GetProductByProductOrder(Guid? productOrderID)
         {

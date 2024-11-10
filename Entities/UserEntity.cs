@@ -7,7 +7,7 @@ namespace ProductOrder.Entities
     /// <summary>
     /// Người dùng
     /// </summary>
-    [Table(Name = "users")]
+    [Table(Name = "users", View = "view_user")]
     public class UserEntity
     {
         [Key]
@@ -42,5 +42,10 @@ namespace ProductOrder.Entities
         /// Mật khẩu
         /// </summary>
         public string Password { get; set; }
+
+        /// <summary>
+        /// Địa chỉ
+        /// </summary>
+        public string Address { get; set; }
     }
 }
