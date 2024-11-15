@@ -7,7 +7,7 @@ namespace ProductOrder.Entities
     /// <summary>
     /// Người dùng
     /// </summary>
-    [Table(Name = "users", View = "view_user")]
+    [Table(Name = "users")]
     public class UserEntity
     {
         [Key]

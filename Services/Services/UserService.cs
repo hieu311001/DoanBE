@@ -1,4 +1,5 @@
 ﻿using ProductOrder.Entities;
+using ProductOrder.Parameters;
 using ProductOrder.Repos.Interfaces;
 using ProductOrder.Services.Interfaces;
 using System.Security.Cryptography;
@@ -10,6 +11,12 @@ namespace ProductOrder.Services.Services
     {
         public UserService(IUserRepo repo) : base(repo)
         {
+
+        }
+
+        public dynamic GetUserStaff()
+        {
+            return _repo.ExecuteProc("Proc_GetUserStaff", null);
         }
 
         /// <summary>
