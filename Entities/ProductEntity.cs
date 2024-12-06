@@ -25,6 +25,10 @@ namespace ProductOrder.Entities
         /// Giá tiền
         /// </summary>
         public decimal? Price { get; set; }
+        /// <summary>
+        /// Giá gốc
+        /// </summary>
+        public decimal? OriginalPrice { get; set; }
 
         /// <summary>
         /// Thương hiệu

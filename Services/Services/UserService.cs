@@ -14,6 +14,20 @@ namespace ProductOrder.Services.Services
 
         }
 
+        public dynamic GetUserCustomer()
+        {
+            return _repo.ExecuteProc("Proc_GetUserCustomer", null);
+        }
+
+        public dynamic GetUserCustomerByID(string id)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+
+            param.Add("userID", id);
+
+            return _repo.ExecuteProc("Proc_GetUserCustomerByID", param);
+        }
+
         public dynamic GetUserStaff()
         {
             return _repo.ExecuteProc("Proc_GetUserStaff", null);

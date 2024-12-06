@@ -41,5 +41,19 @@ namespace ProductOrder.Controllers
             dynamic result = _service.GetUserStaff();
             return Ok(result);
         }
+
+        [HttpGet("customer")]
+        public IActionResult GetUserCustomer()
+        {
+            dynamic result = _service.GetUserCustomer();
+            return Ok(result);
+        }
+
+        [HttpGet("customer/{id}")]
+        public IActionResult GetUserCustomerByID(string id)
+        {
+            dynamic result = _service.GetUserCustomerByID(id);
+            return Ok(result);
+        }
     }
 }
